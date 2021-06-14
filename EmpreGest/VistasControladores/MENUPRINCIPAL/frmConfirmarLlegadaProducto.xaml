@@ -1,0 +1,73 @@
+﻿<Window x:Class="EmpreGest.VistasControladores.frmConfirmarLlegadaProducto"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmpreGest.VistasControladores"
+        mc:Ignorable="d"
+        Title="frmInsertarModificarEmpleados" Height="800" Width="1200"  WindowStyle="None" WindowStartupLocation="CenterScreen"
+        MinWidth="1200" MinHeight="600"  Background="LightGray" MouseLeftButtonDown="Window_MouseLeftButtonDown"  ResizeMode="NoResize" BorderBrush="Black" BorderThickness="3">
+    <Window.Resources>
+        <BitmapImage x:Key="INSERTARMODIFICAR_iconAtras" UriSource="..\..\Imagenes\MENUPRINCIPAL\INSERTARMODIFICAR\INSERTARMODIFICAR_iconAtras.png"/>
+    </Window.Resources>
+
+    <Grid Name="pConsultaPedidos" Grid.Column="1" Background="White" Margin="30,30,30,30"  HorizontalAlignment="Stretch" Visibility="Visible" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock HorizontalAlignment="Stretch" Text="Seleccione el pedido que quiere confirmar su llegada: " FontWeight="Bold" FontSize="24" Margin="20,10"/>
+        <WrapPanel Grid.Column="6" Name="pSuperior" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Name="btnSalir" Grid.Column="2" Margin="10" Background="Transparent" BorderBrush="Transparent" Click="btnSalir_Click">
+                <Image Source="{StaticResource INSERTARMODIFICAR_iconAtras}" Width="30" />
+            </Button>
+        </WrapPanel>
+
+
+        <!-- Datagrid con los datos -->
+        <DataGrid Grid.Row="1" Name="dgProductosConfirmar" AutoGenerateColumns="False" IsReadOnly="True" FontSize="16" ColumnWidth="*" Margin="20,10,20,0" GridLinesVisibility="All" SelectionMode="Single">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="CornflowerBlue"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1,1,1,3"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="idPedido" Binding="{Binding idPedido}" Width="*"/>
+                <DataGridTextColumn Header="Precio Unitario" Binding="{Binding precioUnitario, StringFormat=0.00}" Width="*"/>
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding cantidad}" Width="*"/>
+                <DataGridTextColumn Header="Precio Total" Binding="{Binding precioTotal, StringFormat=0.00}" />
+                <DataGridTextColumn Header="Fecha Pedido" Binding="{Binding fechaPedido}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Botones inferiores -->
+        <Grid Grid.Row="2" Margin="10" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <!-- Botones inferiores -->
+            <Grid Grid.Row="2" Margin="40,20" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnConfirmarLlegada" Grid.Column="1" Content="Confirmar Llegada" Padding="16"  FontSize="22" Click="btnConfirmarLlegada_Click" HorizontalAlignment="Center"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2" Margin="0,0,100,0" />
+                <Button Grid.Column="3" Content="Cancelar" Name="btnCancelar" Padding="16"  FontSize="22" Click="btnSalir_Click" HorizontalAlignment="Center"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+            </Grid>
+       
+    </Grid>
+</Window>

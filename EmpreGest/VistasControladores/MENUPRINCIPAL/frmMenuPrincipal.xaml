@@ -1,0 +1,448 @@
+﻿<Window x:Class="EmpreGest.VistasControladores.frmMenuPrincipal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmpreGest.VistasControladores"
+        mc:Ignorable="d"
+        Title="EmpreGest" WindowState="Maximized"  WindowStyle="None" WindowStartupLocation="CenterScreen"
+        MinWidth="1600" MinHeight="900" Width="1600" Height="900" Background="LightGray" MouseLeftButtonDown="Window_MouseLeftButtonDown"  ResizeMode="NoResize">
+    <Window.Resources>
+        <!-- Imagenes del la barra del titulo-->
+        <BitmapImage x:Key="MENUPRINCIPAL_iconCerrar" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconCerrar.png"/>
+        <BitmapImage x:Key="MENUPRINCIPAL_iconMaximizar" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconMaximizar.png"/>
+        <BitmapImage x:Key="MENUPRINCIPAL_iconMinimizar" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconMinimizar.png"/>
+        <BitmapImage x:Key="MENUPRINCIPAL_iconNormal" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconNormal.png"/>
+        <BitmapImage x:Key="MENUPRINCIPAL_iconUsuario" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconUsuario.png"/>
+        <!-- Imagenes del menu de usuario-->
+        <BitmapImage x:Key="MENUPRINCIPAL_iconoCerrarSesion" UriSource="..\..\Imagenes\MENUPRINCIPAL\MENUPRINCIPAL_iconoCerrarSesion.png"/>
+        
+
+        <!-- Estilos de controles -->
+        <!-- Botones menu lateral -->
+        <Style TargetType="Button" x:Key="EstiloBtnMenuLateral">
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="50,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            
+        </Style>
+
+        <!-- Botones submenus laterales -->
+        <Style TargetType="Button" x:Key="EstiloBtnSubMenuLateral" BasedOn="{StaticResource EstiloBtnMenuLateral}">
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="70,14,40,14"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Barra Superior-->
+        <Grid Background="Orange">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            
+
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2 0 2 0" Margin="0,0,10,0" >
+                <Menu  Background="Orange">
+                    <MenuItem Header="nombre" Name="tbxMenuSuperiorUsuario"  FontSize="18" 
+                           Padding="30,6" FontWeight="Bold" Background="Orange" Template="{DynamicResource MenuItemPersonPrincipal}">
+
+                        <MenuItem Name="miDatosUsuario" Header="Datos del Usuario" Background="Orange" Template="{DynamicResource MenuItemPersoSubMenu}" Padding="4,10" Click="miMenuUsuario_Click">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource MENUPRINCIPAL_iconUsuario}" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Name="miCerrarSesion" Header="Cerrar sesion" Background="Orange" Template="{DynamicResource MenuItemPersoSubMenu}" Padding="4,10" Click="miMenuUsuario_Click">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource MENUPRINCIPAL_iconoCerrarSesion}" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+            </Border>
+
+            <!-- Botones de control de la ventana -->
+            <Button Name="btnMinimizar" Padding="14,10" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Click="btnBarraSuperior_Click">
+                <Image Source="{StaticResource MENUPRINCIPAL_iconMinimizar}" Width="14" />
+            </Button>
+            <Button Name="btnMaximizarNormal" Padding="14,10" Grid.Column="3" Background="Transparent" BorderBrush="Transparent" Click="btnBarraSuperior_Click">
+                <Image Name="imvMaximizarNormal" Source="{StaticResource MENUPRINCIPAL_iconNormal}" Width="14" />
+            </Button>
+            <Button Name="btnCerrar" Padding="14,10" Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Click="btnBarraSuperior_Click">
+                <Image Source="{StaticResource MENUPRINCIPAL_iconCerrar}" Width="14"/>
+            </Button>
+        </Grid>
+
+        <!-- Contenido -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Menu lateral -->
+            <StackPanel Background="Gray" Orientation="Vertical" Width="330">
+                <Button Name="btnIncio" Content="Inicio" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                <!-- Empleado-->
+                <Button Name="btnEmpleado" Content="Gestion de Empleados" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                <!-- Interno empleado-->
+                <StackPanel Orientation="Vertical" Name="pMenuEmpleado" Visibility="Collapsed">
+                    <Button Name="btnEmpleadoOperaciones" Content="Operaciones sobre Empleados" Style="{StaticResource EstiloBtnSubMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnControlMenuEmpleados_Click"/>
+                </StackPanel>
+
+                <!-- Productos -->
+                <Button Name="btnProductos" Content="Productos del Almacén" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                 <!--Interno Producto-->
+                <StackPanel Orientation="Vertical" Name="pMenuProductos" Visibility="Collapsed">
+                    <Button Name="btnGestionStockProducto" Content="Gestion de Stock" Style="{StaticResource EstiloBtnSubMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnControlMenuProductos_Click"/>
+                </StackPanel>
+
+                 <!--Pedidos -->
+                <Button Name="btnPedidos" Content="Pedidos de los Clientes" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                 <!--Interno Pedidos -->
+                <StackPanel Orientation="Vertical" Name="pMenuPedidos" Visibility="Collapsed">
+                    <Button Name="btnConsultarPedidos" Content="Consultar Pedidos" Style="{StaticResource EstiloBtnSubMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnControlMenuPedidos_Click"/>
+                </StackPanel>
+
+                <!-- Clientes -->
+                <Button Name="btnClientes" Content="Gestión de Clientes" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                <!--Interno Ventas -->
+                <StackPanel Orientation="Vertical" Name="pMenuClientes" Visibility="Collapsed">
+                    <Button Name="btnGestionClientes" Content="Gestión de Clientes" Style="{StaticResource EstiloBtnSubMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnControlMenuClientes_Click"/>
+                </StackPanel>
+                
+                <!-- Ventas -->
+                <Button Name="btnVentas" Content="Ventas" Style="{StaticResource EstiloBtnMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnMenuLateral_Click"/>
+                <!--Interno Ventas -->
+                <StackPanel Orientation="Vertical" Name="pMenuVentas" Visibility="Collapsed">
+                    <Button Name="btnRealizarVentas" Content="Realizar Venta" Style="{StaticResource EstiloBtnSubMenuLateral}" Template="{DynamicResource BotonMenuLateralControlTemplate}" Click="btnControlMenuVentas_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Panel inicio -->
+            <Grid Name="pInicio" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border BorderBrush="Black" BorderThickness="3" Margin="200,20" VerticalAlignment="Top" Background="AliceBlue">
+                    <TextBlock Name="tbxHoraActual" FontSize="140" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, StringFormat='HH:mm:ss'}"/>
+                </Border>
+
+            </Grid>
+
+            <!-- Panel correspondiente a al listview con los datos de los empleados-->
+            <Grid Name="pConsultaEmpleado" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Hidden" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                
+                <!-- zona de filtros-->
+                <Grid Margin="20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Filtros para los datos:" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="6" Text="Empleados" FontStyle="Oblique" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    <!-- Filtro por rol de usuario -->
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="Roles de usuario:" FontSize="16"/>
+                        <ComboBox Name="cbxFiltroEmpleadoDepartamento" FontSize="16" SelectionChanged="cbxFiltroEmpleadoDepartamento_SelectionChanged"/>
+                    </StackPanel>
+                    <!-- Boton para limpiar el combobox-->
+                    <Button Name="btnEmpleadoLimpiarDespartamento" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Limpiar" VerticalAlignment="Bottom" Margin="2" FontSize="14" Padding="2"  Click="BtnPanelEmpleados_Click"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <!-- Filtro Nombre -->
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="Ciudad:" FontSize="16"/>
+                        <TextBox Name="tbxEmpleadoFiltroCiudad" FontSize="16" MaxLength="25" TextChanged="tbxFiltroEmpleados_TextChanged"/>
+                    </StackPanel>
+
+                    <!-- Filtro Primer Apellido -->
+                    <StackPanel Grid.Row="1" Grid.Column="4">
+                        <TextBlock Text="País:" FontSize="16"/>
+                        <TextBox Name="tbxEmpleadoFiltroPais" FontSize="16" MaxLength="25" TextChanged="tbxFiltroEmpleados_TextChanged"/>
+                    </StackPanel>
+
+                    <!-- Filtro Nombre -->
+                    <StackPanel Grid.Row="1" Grid.Column="6">
+                        <TextBlock Text="Nombre:" FontSize="16"/>
+                        <TextBox Name="tbxEmpleadoFiltroNombre" FontSize="16" MaxLength="25" TextChanged="tbxFiltroEmpleados_TextChanged"/>
+                    </StackPanel>
+                </Grid>
+  
+                <!-- Datagrid con los datos -->
+                <DataGrid Grid.Row="1" Name="dgEmpleadosInsMod" AutoGenerateColumns="False" IsReadOnly="True" FontSize="16" ColumnWidth="*" Margin="20,10,20,0" GridLinesVisibility="All" SelectionMode="Single">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="CornflowerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1,1,1,3"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Correo" Binding="{Binding correo}" Width="auto"/>
+                        <DataGridTextColumn Header="Usuario" Binding="{Binding usuario}" Width="auto"/>
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding nombre}" />
+                        <DataGridTextColumn Header="Primer apellido" Binding="{Binding apellido1}" />
+                        <DataGridTextColumn Header="Segundo apellido" Binding="{Binding apellido2}" Width="auto"/>
+                        <DataGridTextColumn Header="Rol de usuario" Binding="{Binding nombreDepartamento}" />
+                        <DataGridTextColumn Header="Fecha nacimiento" Binding="{Binding fechaNacimiento, StringFormat=d}" Width="auto" />
+                        <DataGridTextColumn Header="Dirección" Binding="{Binding direccion}" />
+                        <DataGridTextColumn Header="Ciudad" Binding="{Binding ciudad}"/>
+                        <DataGridTextColumn Header="País" Binding="{Binding pais}"/>
+                        <DataGridTextColumn Header="Teléfono" Binding="{Binding telefono}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!-- Botones para añadir modificar y eliminar empleados -->
+                <Grid Grid.Row="2" Margin="20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnEmpleadoLimpiarFiltro" Content="Limpiar Filtros" Grid.Column="1" Padding="14" FontSize="18" Click="BtnPanelEmpleados_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnEmpleadoEliminarEmpleado" Content="Borra Empleado" Grid.Column="3" Padding="14" FontSize="18" Click="BtnPanelEmpleados_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnEmpleadoModificarEmpleado" Content="Modificar Empleado" Grid.Column="5" Padding="14" FontSize="18" Click="BtnPanelEmpleados_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnEmpleadoInsertarEmpleado" Content="Insertar Empleado" Grid.Column="7" Padding="14" FontSize="18" Click="BtnPanelEmpleados_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                </Grid>
+            </Grid>
+            
+            <!-- Panel correspondiente al listview con los datos de los productos -->
+            <Grid Name="pGestionStockProductos" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Hidden" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <!-- zona de filtros-->
+                <Grid Margin="20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Filtros para los datos:" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="6" Text="Gestión de Stock" FontStyle="Oblique" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
+
+                    <!--Filtro por ID del producto -->
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="Numero Producto:" FontSize="16"/>
+                        <TextBox Name="tbxGestProductoIDFiltro" FontSize="16" MaxLength="25" TextChanged="tbxGestProductoIDFiltro_TextChanged" PreviewKeyDown="tbxNumerosEnteros_PreviewKeyDown"/>
+                    </StackPanel>
+
+                    <!-- Filtro Categoria -->
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="Categorias:" FontSize="16"/>
+                        <ComboBox Name="cbxFiltroProductoCategorias" FontSize="16" SelectionChanged="cbxFiltroProductoCategorias_SelectionChanged"/>
+                    </StackPanel>
+                    <!-- Boton para limpiar el combobox-->
+                    <Button Name="btnProductoLimpiarCategoria" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Content="Limpiar" VerticalAlignment="Bottom" Margin="2" FontSize="14" Padding="2"  Click="BtnPanelProductos_Click"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+
+                    <!-- Filtro Reponer -->
+                    <StackPanel Grid.Row="1" Grid.Column="4">
+                        <TextBlock Text="Reponer:" FontSize="16"/>
+                        <ComboBox Name="cbxFiltroProductoReponer" FontSize="16" SelectionChanged="cbxFiltroProductoCategorias_SelectionChanged"/>
+                    </StackPanel>
+                    <!-- Boton para limpiar el combobox-->
+                    <Button Name="btnProductoLimpiarReponer" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left" Content="Limpiar" VerticalAlignment="Bottom" Margin="2" FontSize="14" Padding="2"  Click="BtnPanelProductos_Click"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                </Grid>
+
+                <!-- Datagrid con los datos -->
+                <DataGrid Grid.Row="1" Name="dgProductosStock" AutoGenerateColumns="False" IsReadOnly="True" FontSize="16" ColumnWidth="*" Margin="20,10,20,0" GridLinesVisibility="All" SelectionMode="Single">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="CornflowerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1,1,1,3"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding idProducto}" Width="auto"/>
+                        <DataGridTextColumn Header="Descripción" Binding="{Binding descripcion}" Width="auto"/>
+                        <DataGridTextColumn Header="Categoria" Binding="{Binding nombreCategoria}" Width="*" />
+                        <DataGridTextColumn Header="Unidades en Stock" Binding="{Binding unidadesStock}" />
+                        <DataGridTextColumn Header="Unidades Pedidas" Binding="{Binding unidadesPedidas}" Width="*"/>
+                        <DataGridTextColumn Header="Unidades Reservadas" Binding="{Binding unidadesReservadas}" Width="*"/>
+                        <DataGridTextColumn Header="Stock Mínimo" Binding="{Binding stockMinimo}" Width="*"/>
+                        <DataGridTextColumn Header="Reponer" Binding="{Binding reponer}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Botones para añadir modificar y eliminar empleados -->
+                <Grid Grid.Row="2" Margin="20,10" x:Name="grdBtnProductos">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnProductoDejarReponerProducto" Content="        Activar\Desactivar &#10; reponer  automaticamente" Grid.Column="1" Padding="14" FontSize="18" Click="BtnPanelProductos_Click" 
+                            HorizontalAlignment="Center" Margin="10,10,10,10" Background="LightYellow" FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnProductoConfirmarLlegada" Content="Confirmar llegada Producto" Grid.Column="3" Padding="14" FontSize="18" Click="BtnPanelProductos_Click" HorizontalAlignment="Center" Margin="10,10,10,10"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnProductoPedirProducto" Content="Pedir Producto" Grid.Column="5" Padding="14" FontSize="18" Click="BtnPanelProductos_Click" HorizontalAlignment="Center" Margin="10,10,10,10"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnProductoInsertarProducto" Content="Insertar Producto" Grid.Column="7" Padding="14" FontSize="18" Click="BtnPanelProductos_Click" HorizontalAlignment="Center" Margin="10,10,10,10"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                </Grid>
+            </Grid>
+
+            <!-- Panel correspondiente a al listview con los datos de los pedidos realizados por los clientes-->
+            <Grid Name="pConsultaPedidos" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Hidden" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <!-- zona de filtros-->
+                <Grid Margin="20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.9*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Filtros para los datos:" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="6" Text="Pedidos" FontStyle="Oblique" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right"/>
+
+                    <!-- Filtro NumeroPedido -->
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="Numero Pedido:" FontSize="16"/>
+                        <TextBox Name="tbxPedidoNumeroPedidoFiltro" FontSize="16" MaxLength="25" TextChanged="tbxFiltroIDPedidos_TextChanged" PreviewKeyDown="tbxNumerosEnteros_PreviewKeyDown"/>
+                    </StackPanel>
+
+                    <!-- Filtro Por Clientes -->
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="Clientes:" FontSize="16"/>
+                        <ComboBox Name="cbxFiltroPedidosClientesPedidos" FontSize="16" SelectionChanged="cbxFiltroPedidos_SelectionChanged"/>
+                    </StackPanel>
+
+                    <!-- Boton para limpiar el combobox-->
+                    <Button Name="btnPedidosLimpiarCliente" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Content="Limpiar" VerticalAlignment="Bottom" Margin="2" FontSize="14" Padding="2"  Click="BtnPanelPedidos_Click"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+
+                    <!-- Filtro Por estado -->
+                    <StackPanel Grid.Row="1" Grid.Column="4">
+                        <TextBlock Text="Estado pedido:" FontSize="16"/>
+                        <ComboBox Name="cbxFiltroPedidosEstado" FontSize="16" SelectionChanged="cbxFiltroPedidos_SelectionChanged"/>
+                    </StackPanel>
+                    <!-- Boton para limpiar el combobox-->
+                    <Button Name="btnPedidosLimpiarEstado" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left" Content="Limpiar" VerticalAlignment="Bottom" Margin="2" FontSize="14" Padding="2"  Click="BtnPanelPedidos_Click"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                </Grid>
+
+                <!-- Datagrid con los datos -->
+                <DataGrid Grid.Row="1" Name="dgPedidos" AutoGenerateColumns="False" IsReadOnly="True" FontSize="16" ColumnWidth="*" Margin="20,10,20,0" GridLinesVisibility="All" SelectionMode="Single">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="CornflowerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1,1,1,3"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Numero Pedido" Binding="{Binding idPedido}" Width="Auto"/>
+                        <DataGridTextColumn Header="Nombre Cliente" Binding="{Binding nombreApellidos}" Width="auto"/>
+                        <DataGridTextColumn Header="Fecha Del pedido" Binding="{Binding fechaPedido}" />
+                        <DataGridTextColumn Header="Fecha de entrega" Binding="{Binding fechaEntrega}" />
+                        <DataGridTextColumn Header="Estado" Binding="{Binding estado}" />
+                        <DataGridTextColumn Header="Precio Final" Binding="{Binding PrecioFinal, StringFormat=0.00}" Width="0.5*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Botones para limpiar los filtros, ver los detalles y devolver productos pedidos -->
+                <Grid Grid.Row="2" Margin="20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnPedidosLimpiarFiltro" Content="Limpiar Filtros" Grid.Column="1" Padding="14" FontSize="18" Click="BtnPanelPedidos_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                    <Button Name="btnPedidosDetalles" Content="Detalles del pedido" Grid.Column="3" Padding="14" FontSize="18" Click="BtnPanelPedidos_Click" HorizontalAlignment="Center" Margin="10,10,10,0"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+                </Grid>
+            </Grid>
+
+
+            <!-- Panel de Clientes-->
+            <Grid Name="pGestionClientes" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Hidden" >
+            </Grid>
+
+            <!-- Panel de ventas-->
+            <Grid Name="pRealizarVentas" Grid.Column="1" Background="White" Margin="40,40,40,45"  HorizontalAlignment="Stretch" Visibility="Hidden" >
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

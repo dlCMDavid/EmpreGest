@@ -1,0 +1,15 @@
+﻿<Application x:Class="EmpreGest.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EmpreGest"
+             StartupUri="VistasControladores\LOGIN\frmLogin.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="VistasControladores\DicControlesPersonalizados.xaml"/> 
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <!--StartupUri="VistasControladores\frmPrincipal.xaml"-->
+    </Application.Resources>
+</Application>

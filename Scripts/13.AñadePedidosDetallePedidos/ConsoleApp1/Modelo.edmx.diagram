@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="577273f009984de08a1099e237483288" Name="Diagram1">
+        <EntityTypeShape EntityType="DBEmpreGestModel.Categoria" Width="1.5" PointX="0.75" PointY="3.125" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.Cliente" Width="1.5" PointX="0.75" PointY="16.5" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.Departamento" Width="1.5" PointX="1.5" PointY="13.75" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.DetallePedido" Width="1.5" PointX="5.25" PointY="1.75" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.Empleado" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.Pedido" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.Producto" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="DBEmpreGestModel.ProductoRecibir" Width="1.5" PointX="5.25" PointY="5.75" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idCategoria" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idCliente" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idDepartamento" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idPedido" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idProducto" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idEmpleado" />
+        <AssociationConnector Association="DBEmpreGestModel.FK_idProductoRecibir" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

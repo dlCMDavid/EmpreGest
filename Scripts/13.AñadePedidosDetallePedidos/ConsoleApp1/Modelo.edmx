@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBEmpreGestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
+          <Property Name="nombre" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="apellido1" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="apellido2" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ciudad" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="pais" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="idDepartamento" />
+          </Key>
+          <Property Name="idDepartamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="precioUnitario" Type="money" Nullable="false" />
+          <Property Name="precioFinal" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="idEmpleado" />
+          </Key>
+          <Property Name="idEmpleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDepartamento" Type="int" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
+          <Property Name="usuario" Type="varchar" MaxLength="30" />
+          <Property Name="contraseña" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="apellido1" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="apellido2" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="fechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ciudad" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="pais" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+          <Property Name="foto" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpleado" Type="int" Nullable="false" />
+          <Property Name="idCliente" Type="int" Nullable="false" />
+          <Property Name="fechaPedido" Type="datetime" Nullable="false" />
+          <Property Name="fechaEntrega" Type="datetime" />
+          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCategoria" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="unidadesStock" Type="int" Nullable="false" />
+          <Property Name="unidadesPedidas" Type="int" Nullable="false" />
+          <Property Name="unidadesReservadas" Type="int" Nullable="false" />
+          <Property Name="stockMinimo" Type="int" Nullable="false" />
+          <Property Name="reponer" Type="bit" Nullable="false" />
+          <Property Name="beneficio" Type="int" Nullable="false" />
+          <Property Name="precioCompraUnitario" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="precioVentaUnitario" Type="money" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="ProductoRecibir">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="precioUnitario" Type="money" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="precioTotal" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="fechaPedido" Type="datetime" />
+          <Property Name="fechaEntregado" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_idCategoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idCliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idDepartamento">
+          <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="idDepartamento" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idEmpleado">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="idEmpleado" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idPedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idProducto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idProductoRecibir">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="ProductoRecibir" Type="Self.ProductoRecibir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="ProductoRecibir">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEmpreGestModelStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductoRecibir" EntityType="Self.ProductoRecibir" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_idCategoria" Association="Self.FK_idCategoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idCliente" Association="Self.FK_idCliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idDepartamento" Association="Self.FK_idDepartamento">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idEmpleado" Association="Self.FK_idEmpleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idPedido" Association="Self.FK_idPedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idProducto" Association="Self.FK_idProducto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idProductoRecibir" Association="Self.FK_idProductoRecibir">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoRecibir" EntitySet="ProductoRecibir" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBEmpreGestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEmpreGestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categoria" EntityType="DBEmpreGestModel.Categoria" />
+          <EntitySet Name="Cliente" EntityType="DBEmpreGestModel.Cliente" />
+          <EntitySet Name="Departamento" EntityType="DBEmpreGestModel.Departamento" />
+          <EntitySet Name="DetallePedido" EntityType="DBEmpreGestModel.DetallePedido" />
+          <EntitySet Name="Empleado" EntityType="DBEmpreGestModel.Empleado" />
+          <EntitySet Name="Pedido" EntityType="DBEmpreGestModel.Pedido" />
+          <EntitySet Name="Producto" EntityType="DBEmpreGestModel.Producto" />
+          <EntitySet Name="ProductoRecibir" EntityType="DBEmpreGestModel.ProductoRecibir" />
+          <AssociationSet Name="FK_idCategoria" Association="DBEmpreGestModel.FK_idCategoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idCliente" Association="DBEmpreGestModel.FK_idCliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idDepartamento" Association="DBEmpreGestModel.FK_idDepartamento">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idPedido" Association="DBEmpreGestModel.FK_idPedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idProducto" Association="DBEmpreGestModel.FK_idProducto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idEmpleado" Association="DBEmpreGestModel.FK_idEmpleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_idProductoRecibir" Association="DBEmpreGestModel.FK_idProductoRecibir">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoRecibir" EntitySet="ProductoRecibir" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="DBEmpreGestModel.FK_idCategoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="idCliente" />
+          </Key>
+          <Property Name="idCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="apellido1" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="apellido2" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ciudad" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="pais" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="DBEmpreGestModel.FK_idCliente" FromRole="Cliente" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="idDepartamento" />
+          </Key>
+          <Property Name="idDepartamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Empleado" Relationship="DBEmpreGestModel.FK_idDepartamento" FromRole="Departamento" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="precioUnitario" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="precioFinal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Pedido" Relationship="DBEmpreGestModel.FK_idPedido" FromRole="DetallePedido" ToRole="Pedido" />
+          <NavigationProperty Name="Producto" Relationship="DBEmpreGestModel.FK_idProducto" FromRole="DetallePedido" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="idEmpleado" />
+          </Key>
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="apellido1" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="apellido2" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ciudad" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="pais" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Departamento" Relationship="DBEmpreGestModel.FK_idDepartamento" FromRole="Empleado" ToRole="Departamento" />
+          <NavigationProperty Name="Pedido" Relationship="DBEmpreGestModel.FK_idEmpleado" FromRole="Empleado" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="idCliente" Type="Int32" Nullable="false" />
+          <Property Name="fechaPedido" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="DBEmpreGestModel.FK_idCliente" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="DetallePedido" Relationship="DBEmpreGestModel.FK_idPedido" FromRole="Pedido" ToRole="DetallePedido" />
+          <NavigationProperty Name="Empleado" Relationship="DBEmpreGestModel.FK_idEmpleado" FromRole="Pedido" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCategoria" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unidadesStock" Type="Int32" Nullable="false" />
+          <Property Name="unidadesPedidas" Type="Int32" Nullable="false" />
+          <Property Name="unidadesReservadas" Type="Int32" Nullable="false" />
+          <Property Name="stockMinimo" Type="Int32" Nullable="false" />
+          <Property Name="reponer" Type="Boolean" Nullable="false" />
+          <Property Name="beneficio" Type="Int32" Nullable="false" />
+          <Property Name="precioCompraUnitario" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="precioVentaUnitario" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Categoria" Relationship="DBEmpreGestModel.FK_idCategoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="DetallePedido" Relationship="DBEmpreGestModel.FK_idProducto" FromRole="Producto" ToRole="DetallePedido" />
+          <NavigationProperty Name="ProductoRecibir" Relationship="DBEmpreGestModel.FK_idProductoRecibir" FromRole="Producto" ToRole="ProductoRecibir" />
+        </EntityType>
+        <EntityType Name="ProductoRecibir">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="precioUnitario" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="precioTotal" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="fechaPedido" Type="DateTime" Precision="3" />
+          <Property Name="fechaEntregado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Producto" Relationship="DBEmpreGestModel.FK_idProductoRecibir" FromRole="ProductoRecibir" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_idCategoria">
+          <End Type="DBEmpreGestModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idCliente">
+          <End Type="DBEmpreGestModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="idCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idDepartamento">
+          <End Type="DBEmpreGestModel.Departamento" Role="Departamento" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.Empleado" Role="Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="idDepartamento" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idPedido">
+          <End Type="DBEmpreGestModel.Pedido" Role="Pedido" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idProducto">
+          <End Type="DBEmpreGestModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idEmpleado">
+          <End Type="DBEmpreGestModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="idEmpleado" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_idProductoRecibir">
+          <End Type="DBEmpreGestModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="DBEmpreGestModel.ProductoRecibir" Role="ProductoRecibir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="ProductoRecibir">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBEmpreGestModelStoreContainer" CdmEntityContainer="DBEmpreGestEntities">
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departamento">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Departamento">
+              <MappingFragment StoreEntitySet="Departamento">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idDepartamento" ColumnName="idDepartamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetallePedido">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.DetallePedido">
+              <MappingFragment StoreEntitySet="DetallePedido">
+                <ScalarProperty Name="precioFinal" ColumnName="precioFinal" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+                <ScalarProperty Name="apellido1" ColumnName="apellido1" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="idDepartamento" ColumnName="idDepartamento" />
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaEntrega" ColumnName="fechaEntrega" />
+                <ScalarProperty Name="fechaPedido" ColumnName="fechaPedido" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="precioVentaUnitario" ColumnName="precioVentaUnitario" />
+                <ScalarProperty Name="precioCompraUnitario" ColumnName="precioCompraUnitario" />
+                <ScalarProperty Name="beneficio" ColumnName="beneficio" />
+                <ScalarProperty Name="reponer" ColumnName="reponer" />
+                <ScalarProperty Name="stockMinimo" ColumnName="stockMinimo" />
+                <ScalarProperty Name="unidadesReservadas" ColumnName="unidadesReservadas" />
+                <ScalarProperty Name="unidadesPedidas" ColumnName="unidadesPedidas" />
+                <ScalarProperty Name="unidadesStock" ColumnName="unidadesStock" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoRecibir">
+            <EntityTypeMapping TypeName="DBEmpreGestModel.ProductoRecibir">
+              <MappingFragment StoreEntitySet="ProductoRecibir">
+                <ScalarProperty Name="fechaEntregado" ColumnName="fechaEntregado" />
+                <ScalarProperty Name="fechaPedido" ColumnName="fechaPedido" />
+                <ScalarProperty Name="precioTotal" ColumnName="precioTotal" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

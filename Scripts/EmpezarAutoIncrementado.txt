@@ -1,0 +1,1 @@
+DBCC CHECKIDENT(Categoria,RESEED,0);

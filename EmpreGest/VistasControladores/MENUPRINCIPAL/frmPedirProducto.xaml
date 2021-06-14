@@ -1,0 +1,75 @@
+﻿<Window x:Class="EmpreGest.VistasControladores.frmPedirProducto"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmpreGest.VistasControladores"
+        mc:Ignorable="d"
+        Title="frmPedirProducto" Height="560" Width="700"  WindowStyle="None" WindowStartupLocation="CenterScreen"
+        MinWidth="700" MinHeight="500"  Background="LightGray" MouseLeftButtonDown="Window_MouseLeftButtonDown"  ResizeMode="NoResize" BorderBrush="Black" BorderThickness="3">
+    <Window.Resources>
+        <BitmapImage x:Key="INSERTARMODIFICAR_CargarImagen" UriSource="..\..\Imagenes\MENUPRINCIPAL\INSERTARMODIFICAR\INSERTARMODIFICAR_CargarImagen.png"/>
+        <BitmapImage x:Key="INSERTARMODIFICAR_iconAtras" UriSource="..\..\Imagenes\MENUPRINCIPAL\INSERTARMODIFICAR\INSERTARMODIFICAR_iconAtras.png"/>
+    </Window.Resources>
+    <Grid Grid.Column="1" Background="White" Margin="20"  HorizontalAlignment="Stretch" Visibility="Visible" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Name="pSuperior" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Name="btnSalir" Grid.Column="2" Margin="10" Background="Transparent" BorderBrush="Transparent" Click="btnSalir_Click">
+                <Image Source="{StaticResource INSERTARMODIFICAR_iconAtras}" Width="30" />
+            </Button>
+        </WrapPanel>
+        
+        <Grid Grid.Row="1" Margin="60,20,60,0" VerticalAlignment="Center" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- Descripcion -->
+            <TextBlock Text="Descripción" FontSize="22" FontWeight="Bold" Margin="0,0,0,30"/>
+            <TextBox Grid.Column="1"  Grid.ColumnSpan="2" Name="tbxProductoDescripcion" FontSize="22" Margin="10,0,0,30" IsReadOnly="True"/>
+
+            <!-- categoria -->
+            <TextBlock Grid.Row="1" Text="Unidades en Stock " FontSize="22" FontWeight="Bold"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="tbxProductoUnidadesStock" FontSize="22" Margin="10,0,0,30" IsReadOnly="True"/>
+
+            <!-- Unidades Pedir -->
+            <TextBlock Grid.Row="2" Text="Unidades Pedidas" FontSize="22" FontWeight="Bold" Margin="0,0,0,30"/>
+            <TextBox  Grid.Row="2" Grid.Column="1" Name="tbxProductoUnidadesPedir" FontSize="22" Margin="10,0,0,30" IsReadOnly="True"/>
+            
+            <!-- unidades reservadas-->
+            <TextBlock Grid.Row="3" Text="Unidades Reservadas" FontSize="22" FontWeight="Bold" Margin="0,0,0,30"/>
+            <TextBox  Grid.Row="3" Grid.Column="1" Name="tbxUnidadesReservadas" FontSize="22" Margin="10,0,0,30" IsReadOnly="True"/>
+
+            <!-- Unidadess que el usuario quiere pedir -->
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Text="¿Cuantas unidades desea pedir?" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Name="tbxProductoUnidadesDeseaPedir" FontSize="22" Margin="0,10,0,20" MaxLength="2" PreviewKeyDown="tbxNumerosEnteros_PreviewKeyDown"/>
+        </Grid>
+        <!-- Botones inferiores -->
+        <Grid Grid.Row="2" Margin="40,20" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Content="Pedir Producto" Name="btnProductosPedir" Padding="16"  FontSize="22" Click="btnProductosPedir_Click" HorizontalAlignment="Center"  Background="LightYellow" 
+                            FontWeight="Bold" BorderBrush="Black" BorderThickness="2"/>
+        </Grid>
+    </Grid>
+</Window>
